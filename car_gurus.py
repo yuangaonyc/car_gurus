@@ -1,76 +1,53 @@
-import requests 
-import pandas
 from bs4 import BeautifulSoup
+from selenium import webdriver
+import pandas
+import os
 
-base_link = "https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=&formSourceTag=108&newSearchFromOverviewPage=true&inventorySearchWidgetType=ADVANCED&zip=11206&distance=100&advancedSearchAutoEntities%5B0%5D.selectedEntity=&advancedSearchAutoEntities%5B1%5D.selectedEntity=&advancedSearchAutoEntities%5B2%5D.selectedEntity=&advancedSearchAutoEntities%5B3%5D.selectedEntity=&advancedSearchAutoEntities%5B4%5D.selectedEntity=&advancedSearchAutoEntities%5B5%5D.selectedEntity=&advancedSearchAutoEntities%5B6%5D.selectedEntity=&advancedSearchAutoEntities%5B7%5D.selectedEntity=&advancedSearchAutoEntities%5B8%5D.selectedEntity=&advancedSearchAutoEntities%5B9%5D.selectedEntity=&startYear=&endYear=&__multiselect_bodyTypeGroupIds=&__multiselect_fuelTypes=&minPrice=&maxPrice=&minMileage=&maxMileage=&transmission=ANY&__multiselect_installedOptionIds=&modelChanged=false&filtersModified=true&sortType=undefined&sortDirection=undefined#resultsPage={}"
-
-price = []
-mileage = []
-state = []
-year = []
-make = []
-market_price = []
-rating = []
+link = "https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=carGurusHomePage_false_0&formSourceTag=104&entitySelectingHelper.selectedEntity=&zip=11206"
+pages = 10
 data = []
 
-for page in range(2, 5):
-	link = base_link.format(page)
+chromedriver = "C:\Users\NERO\Downloads/chromedriver"
+os.environ["webdriver.chrome.driver"] = chromedriver
+driver = webdriver.Chrome(chromedriver)
+driver.get(link)
+assert "CarGurus" in driver.title
 
+for i in range(pages):
 
-	r = requests.get(link)
-	c = r.content
-	soup = BeautifulSoup(c, 'html.parser')
-
-	#print(soup.prettify())
-
-	cars = soup.find_all("div", {"class":"cg-dealFinder-result-wrap clearfix"})
-	print(cars[1])
+	html = driver.page_source
+	soup = BeautifulSoup(html, "html.parser")
+	cars = soup.find_all("div", {"class":"ft-car cg-dealFinder-result-wrap clearfix"})
 
 	for car in cars:
 		row = {}
-		title = car.find_all("span", {"itemprop":"name"})
+		title = car.find_all("h4", {"class":"cg-dealFinder-result-model"})
 		info = car.find_all("div", {"class":"cg-dealFinder-result-stats"})
 		deal = car.find_all("div", {"class":"cg-dealFinder-result-deal" })
-		review = car.find("i", {"class":"cg-icon"})
 
 		for item in info:
-			row["price"] = item.find_all("span", {"itemprop": "price"})[0].text
-			row["mileage"] = item.find_all("span", {"itemprop": ""})[0].text
-			address = item.find_all("p")[2].text.replace("Location: ", "")
-			no_borough = address[address.index(",")+2:]
-			row["state"] = no_borough[:no_borough.index(" ")]
-
+			pre_price = item.find_all("span", {"class": "cg-dealFinder-priceAndMoPayment"})[0].text
+			row["price"] = pre_price[pre_price.index("$"):] 
+			row["mileage"] = item.find_all("p")[1].text
+			row["address"] = item.find_all("span",{"class":"cg-dealFinder-result-stats-distance"})[0].text
+			row["dealer_rating"] = str(item.find_all("span", {"class": "cg-dealFinder-result-sellerRatingValue"})[0])
+			
 		for item in title:
-			row["year"] = item.text[0:4]
-			no_year = item.text[item.text.index(" ")+1:]
-			row["make"] = no_year[:no_year.index(" ")]
-			if row["make"] == "Land":
-				row["make"] = "Land Rover"
-
-		for item in deal:
-			nationalAvg = item.find_all("span",{"class": "nationalAvg"})[0].text
-			row["market_price"] = nationalAvg[nationalAvg.index("of")+3:]
+			row["year"] = title[0].text
+			row["make"] = title[0].text
 		
-		short_review = str(review)[48:]
-		try:
-			star = short_review[:short_review.index(" ")]
-		except ValueError:
-			star = ""
-		row["dealer_rating"] = star
-
+		for item in deal:
+			row["market_price"] = item.find_all("p",{"class": "cg-dealfinder-result-deal-imv"})[0].text
+			row["days_listed"] = item.find_all("p", {"class": "cg-dealfinder-result-deal-imv"})[1].text
+		
 		data.append(row)
 
-	print("{} scrape success!".format(link))
-	#print(data)
-	# print(price)
-	# print(mileage)
-	# print(state)
-	# print(year)
-	# print(make)
-	# print(market_price)
-	# print(rating)
+	print("page {} scraping finished!".format(i+1))
+	next_page = driver.find_element_by_class_name("nextPageElement")
+	next_page.click()
+	assert "CarGurus" in driver.title
 
+driver.close()
 df = pandas.DataFrame(data)
-print(df)
-df.to_csv("output.csv")
-print("output success!")
+df.to_csv("output.csv", encoding="ascii")
+print("data extraction success!")
