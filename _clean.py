@@ -1,11 +1,12 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 import pandas as pd
  
 data = pd.read_csv("output.csv")
+
 
 def remove_dollar_and_comma(string):
     string = string.replace("$","")
@@ -21,48 +22,47 @@ data["year"] = data["year"].str[:4]
 data["year"] = data["year"].astype("int")
 
 # extract price
-price = data["price"]
-for i in range(len(price)):
-    price[i] = price[i].split()[0]
-    price[i] = remove_dollar_and_comma(price[i])
-price = price.astype("int")
-    
-# extract mileage
-mileage = data["mileage"]
-for i in range(len(mileage)):
-    mileage[i] = mileage[i][mileage[i].index(" ")+1:]
-    mileage[i] = mileage[i][:mileage[i].index(" ")]
-    mileage[i] = mileage[i].replace(",","")
-mileage = mileage.astype("int")
+def price_clean(price):
+    price = price.split()[0]
+    price = remove_dollar_and_comma(price)
+    return price
+data["price"] = data["price"].apply(price_clean).astype("int")
 
 # extract market_price
-market_price = data["market_price"]
-for i in range(len(market_price)):
-    market_price[i]= market_price[i][market_price[i].index("$"):] 
-    market_price[i] = remove_dollar_and_comma(market_price[i])
-market_price = market_price.astype("int")
+def market_price_clean(market_price):
+    market_price = market_price[market_price.index("$"):] 
+    market_price = remove_dollar_and_comma(market_price)
+    return market_price
+data["market_price"] = data["market_price"].apply(market_price_clean).astype("int")
+
+# extract mileage
+def mileage_clean(mileage):
+    mileage = mileage[mileage.index(" ")+1:]
+    mileage = mileage[:mileage.index(" ")]
+    mileage = mileage.replace(",","")
+    return(mileage)
+data["mileage"] = data["mileage"].apply(mileage_clean).astype("int")
 
 # extract make
-make = data["make"]
-for i in range(len(make)):
-    make[i] = make[i].split()[1]
-    if make[i] == "Land":
-        make[i] = "land Rover"
-make = make.astype("str")
+def make_clean(make):
+    make = make.split()[1]
+    if make == "Land":
+        make = "Land Rover"
+    return make
+data["make"] = data["make"].apply(make_clean).astype("str")
 
 # calculate rating
-dealer_rating = data["dealer_rating"]
-for i in range(len(dealer_rating)):
-    dealer_rating[i] = star_counter(dealer_rating[i])
-dealer_rating = dealer_rating.astype("float")
+def dealer_rating_clean(dealer_rating):
+    return star_counter(dealer_rating)
+data["dealer_rating"] = data["dealer_rating"].apply(dealer_rating_clean).astype("float")
     
 # extract days_listed
-days_listed = data["days_listed"]
-for i in range(len(days_listed)):
-    days_listed[i] = days_listed[i].split()[0]
-    if days_listed[i] == "<":
-        days_listed[i] = 1
-days_listed = days_listed.astype("int")
+def days_listed_clean(days_listed):
+    days_listed = days_listed.split()[0]
+    if days_listed == "<":
+        days_listed = 1
+    return days_listed
+data["days_listed"] = data["days_listed"].apply(days_listed_clean).astype("int")
 
 # create column state
 data["state"] = data["address"][:]
@@ -85,4 +85,10 @@ cols = ["year", "make", "mileage", "dealer_rating", "days_listed", "price", "mar
 data = data[cols]
 
 data.to_csv("clean.csv")
+data
+
+
+# In[ ]:
+
+
 
