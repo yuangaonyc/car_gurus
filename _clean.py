@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[2]:
+# In[3]:
 
 import pandas as pd
  
@@ -75,7 +75,7 @@ city = data["city"]
 for i in range(len(state)):
     city[i] = address[i][:address[i].index(",")]
     state[i] = address[i][address[i].index(","):]
-    state[i] = state[i].replace(",","")
+    state[i] = state[i].replace(", ","")
     
 # remove address column
 data = data.drop("address", 1)
@@ -86,9 +86,4 @@ data = data[cols]
 
 data.to_csv("clean.csv")
 data
-
-
-# In[ ]:
-
-
 
