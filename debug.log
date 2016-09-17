@@ -878,3 +878,50 @@
 [0915/213938:WARNING:in_range_cast.h(38)] value 1547700669122 out of range
 [0915/213938:WARNING:in_range_cast.h(38)] value 1547700670756 out of range
 [0915/213938:WARNING:in_range_cast.h(38)] value 1547701144224 out of range
+[0917/155138:ERROR:process_info.cc(608)] range at 0x570e290c00000000, size 0x202 fully unreadable
+[0917/155138:ERROR:process_info.cc(608)] range at 0x570e297000000000, size 0x202 fully unreadable
+[0917/155138:ERROR:process_info.cc(608)] range at 0x0, size 0x202 fully unreadable
+[0917/155138:WARNING:in_range_cast.h(38)] value 2209073729158 out of range
+[0917/155138:WARNING:in_range_cast.h(38)] value 2209073728962 out of range
+[0917/155138:WARNING:in_range_cast.h(38)] value 2209073728856 out of range
+[0917/155138:WARNING:in_range_cast.h(38)] value 2209074194928 out of range
+[0917/155657:ERROR:process_info.cc(608)] range at 0x4ac6256e00000000, size 0x14d fully unreadable
+[0917/155657:ERROR:process_info.cc(608)] range at 0x4ac6258e00000000, size 0x14d fully unreadable
+[0917/155657:ERROR:process_info.cc(608)] range at 0x0, size 0x14d fully unreadable
+[0917/155657:ERROR:process_reader_win.cc(114)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights.  (0xc0000022)
+[0917/155657:ERROR:exception_snapshot_win.cc(88)] thread ID 5864 not found in process
+[0917/155657:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
+[0917/155751:ERROR:process_info.cc(608)] range at 0x5e1a29c400000000, size 0x29d fully unreadable
+[0917/155751:ERROR:process_info.cc(608)] range at 0x5e1a2a2600000000, size 0x29d fully unreadable
+[0917/155751:ERROR:process_info.cc(608)] range at 0x0, size 0x29d fully unreadable
+[0917/155751:WARNING:in_range_cast.h(38)] value 2874911886374 out of range
+[0917/155751:WARNING:in_range_cast.h(38)] value 2874911886128 out of range
+[0917/155751:WARNING:in_range_cast.h(38)] value 2874911887958 out of range
+[0917/155751:WARNING:in_range_cast.h(38)] value 2874912352192 out of range
+[0917/160508:ERROR:process_info.cc(608)] range at 0x38529c000000000, size 0x1f3 fully unreadable
+[0917/160508:ERROR:process_info.cc(608)] range at 0x3852a2400000000, size 0x1f3 fully unreadable
+[0917/160508:ERROR:process_info.cc(608)] range at 0x0, size 0x1f3 fully unreadable
+[0917/160508:WARNING:in_range_cast.h(38)] value 2143247731728 out of range
+[0917/160508:WARNING:in_range_cast.h(38)] value 2143247731834 out of range
+[0917/160508:WARNING:in_range_cast.h(38)] value 2143247732352 out of range
+[0917/160508:WARNING:in_range_cast.h(38)] value 2143248203536 out of range
+[0917/160910:ERROR:process_info.cc(608)] range at 0xdf34261800000000, size 0x19a fully unreadable
+[0917/160910:ERROR:process_info.cc(608)] range at 0xdf34263800000000, size 0x19a fully unreadable
+[0917/160910:ERROR:process_info.cc(608)] range at 0x0, size 0x19a fully unreadable
+[0917/160910:ERROR:process_reader_win.cc(114)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights.  (0xc0000022)
+[0917/160910:ERROR:exception_snapshot_win.cc(88)] thread ID 3612 not found in process
+[0917/160910:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
+[0917/161553:ERROR:process_info.cc(608)] range at 0xaf7729be00000000, size 0x251 fully unreadable
+[0917/161553:ERROR:process_info.cc(608)] range at 0xaf772a2200000000, size 0x251 fully unreadable
+[0917/161553:ERROR:process_info.cc(608)] range at 0x0, size 0x251 fully unreadable
+[0917/161553:WARNING:in_range_cast.h(38)] value 2549859421164 out of range
+[0917/161553:WARNING:in_range_cast.h(38)] value 2549859421040 out of range
+[0917/161553:WARNING:in_range_cast.h(38)] value 2549859423650 out of range
+[0917/161553:WARNING:in_range_cast.h(38)] value 2549859885024 out of range
+[0917/162650:ERROR:process_info.cc(608)] range at 0x937529c000000000, size 0x2ed fully unreadable
+[0917/162650:ERROR:process_info.cc(608)] range at 0x93752a2400000000, size 0x2ed fully unreadable
+[0917/162650:ERROR:process_info.cc(608)] range at 0x0, size 0x2ed fully unreadable
+[0917/162651:WARNING:in_range_cast.h(38)] value 3219404426064 out of range
+[0917/162651:WARNING:in_range_cast.h(38)] value 3219404425926 out of range
+[0917/162651:WARNING:in_range_cast.h(38)] value 3219404427038 out of range
+[0917/162651:WARNING:in_range_cast.h(38)] value 3219404890032 out of range

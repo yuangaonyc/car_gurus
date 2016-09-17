@@ -4,9 +4,9 @@
 ################# Enter Values Here #####################
 
 #########################################################
-zipcode = 11206
-pages = 10
-data_name = "new"
+zipcode = 13775
+pages = 100
+data_name = "new3"
 #########################################################
 
 link = "https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=carGurusHomePage_false_0&formSourceTag=112&newSearchFromOverviewPage=true&inventorySearchWidgetType=AUTO&entitySelectingHelper.selectedEntity=&entitySelectingHelper.selectedEntity2=&zip={}&distance=100&searchChanged=true&modelChanged=true&filtersModified=true".format(zipcode)
@@ -173,7 +173,7 @@ address = data["address"]
 state = data["state"]
 city = data["city"]
 
-print("\n data refomatting...")    
+print("\n data reformatting...")    
 for i in range(len(state)):
     city[i] = address[i][:address[i].index(",")]
     state[i] = address[i][address[i].index(","):]
